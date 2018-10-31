@@ -21,9 +21,10 @@ console.log(txtList);
 // img0.style.display="none";
 
 var currentNo=0;
+var nodeLength=8;
 
 function changeImg(){
-    var nodeLength=txt.length
+  
     for(var i=0;i<nodeLength;i++){
 
         imagesA [i].className="hiddenImg";
