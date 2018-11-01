@@ -8,96 +8,88 @@
 // img4.style.dispaly="block";
 // img0.style.dispaly="none";
 
-var imagesA=document.getElementById("images").children;
-var txtList=document.querySelectorAll(".txtItem");
-console.log(txtList);
+var imagesA = document.getElementById("images").children;
+var txtList = document.querySelector(".txt-box").children;
 
-// console.log(imagesA);
+var currentNo = 0;
+const nodeLength = 8;
 
-// var img4=document.getElementById('images').children[4];
-// img4.style.display="block";
-
-// var img0=document.getElementsByClassName('displayImg')[0];
-// img0.style.display="none";
-
-var currentNo=0;
-var nodeLength=8;
-
-function changeImg(){
-  
-    for(var i=0;i<nodeLength;i++){
-
-        imagesA [i].className="hiddenImg";
-        console.log(imagesA[i]);
-        txtList[i].className="txtItem normalColor"
-        
+function changeImg() {
+    for (var i = 0; i < nodeLength; i++) {
+        imagesA[i].className = "hiddenImg";
+        txtList[i].className = "txtItem normalColor";
     }
-
-    imagesA[currentNo].className="displayImg";
-txtList[currentNo].className="txtItem heighlightColor";
-
-    if(currentNo<7) currentNo++;
-    else{
-        currentNo=0;
-    }
-// console.log(currentNo);
-
-
+    imagesA[currentNo].className = "displayImg";
+    txtList[currentNo].className = "txtItem heighlightColor";
+    //    console.log(currentNo);
 }
-var timer=window.setInterval(changeImg,1000)
-function stopChange (){
+
+function leftImg() {     
+    if (currentNo > 0) { currentNo--; }
+    else {
+        currentNo = 7;
+    } 
+}
+
+
+function rightImg() {
+    if (currentNo < 7) { currentNo++; }
+    else {
+        currentNo = 0;
+    }  
+}
+
+var timer = window.setInterval(rightImgGo, 1000);
+
+function stopChange() {
     window.clearInterval(timer);
+    // console.log('father');
 }
-function startChange(){
-    timer=window.setInterval(changeImg,1000);
+function startChange() {
+    timer = window.setInterval(rightImgGo, 1000);
 }
 
-var sliderDiv=document.querySelector(".slider");
-// console.log(imagesDiv);
-sliderDiv.addEventListener('mouseover',stopChange);
-sliderDiv.addEventListener('mouseout',startChange);
+var sliderDiv = document.querySelector(".slider");
+//console.log(imagesDiv);
+sliderDiv.addEventListener('mouseover', function () {
+    window.clearInterval(timer);
+    // console.log('father');
+});
+sliderDiv.addEventListener('mouseout', function () {
+    timer = window.setInterval(rightImgGo, 1000);
+});
 
-for(var i=0;i<txtList.length;i++){
-    txtList[i].addEventListener('mouseover',gotoImg);
-    txtList[i].no=i;
-;    console.log(txtList[i].no);
-}
-function gotoImg(){
-//    console.log(this.no);
-   currentNo=this.no;
-   changeImg();
-    
-}
-var leftButton=document.querySelector('.leftButton');
-var rightButton=document.querySelector('.rightButton');
-
-leftButton.addEventListener('click',leftImg);
-rightButton.addEventListener('click',rightImg)
-
-function leftImg(){
-    for(var i=0;i<nodeLength;i++){
-
-        imagesA [i].className="hiddenImg";
-        // console.log(imagesA[i]);
-        txtList[i].className="txtItem normalColor"
-        
-    }
-
-    if(currentNo>0) {currentNo--;}
-    else{
-        currentNo=7;
-    }
-
-    imagesA [i].className="hiddenImg";
-    // console.log(imagesA[i]);
-    txtList[i].className="txtItem normalColor"
+for (var i = 0; i < txtList.length; i++) {
+    txtList[i].addEventListener('mouseover',function () {
+        // console.log(txtList[i]);
+        // console.log(this.no);
+        currentNo = this.no;
+        changeImg();
+    });
+    txtList[i].no = i;
+    //    console.log( txtList[i].no);
 
 }
-function rightImg(){
-    if(currentNo<7) {currentNo++;}
-    else{
-        currentNo=0;
-    }
-    console.log(currentNo);
+
+function gotoImg() {
+    // console.log(txtList[i]);
+    // console.log(this.no);
+    currentNo = this.no;
+    changeImg();
+}
+var leftButton = document.querySelector('.leftButton');
+var rightButton = document.querySelector('.rightButton');
+// console.log(leftButton);
+
+leftButton.addEventListener('click', leftImgGo);
+rightButton.addEventListener('click', rightImgGo);
+
+function leftImgGo(){
+    leftImg();
+    changeImg();
+}
+
+function rightImgGo(){
+    rightImg();
     changeImg();
 }
